@@ -12,10 +12,12 @@ type Result = {
 }
 let result:Result = {};
 
+const ROOF_ANGLE = 45 * Math.PI / 180;
+
 for (const [type, [area, floors]] of Object.entries(houses)) {
     let per_floor = area / floors;
     let side = Math.sqrt(per_floor);
-    let roof_side = side / (2 * Math.cos(45));
+    let roof_side = side / (2 * Math.cos(ROOF_ANGLE));
     let num_exposed_walls = 4;
     let roof_type = "pitched";
     if (type === "terraced") {
@@ -27,7 +29,7 @@ for (const [type, [area, floors]] of Object.entries(houses)) {
     let surface_area = per_floor + num_exposed_walls*(side * room_height * floors) + 2*(roof_side * side);
 
     if (type !== "terraced" && roof_type === "pitched") {
-        surface_area += 0.5 * (side/2) * roof_side * Math.sin(45);
+        surface_area += 0.5 * (side/2) * roof_side * Math.sin(ROOF_ANGLE);
     };
     result[type] = Math.round(surface_area);
 };
