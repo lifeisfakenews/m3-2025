@@ -25,6 +25,10 @@ for (const [type, [area, floors]] of Object.entries(houses)) {
         roof_type = "flat";
     }
     let surface_area = per_floor + num_exposed_walls*(side * room_height * floors) + 2*(roof_side * side);
+
+    if (type !== "terraced" && roof_type === "pitched") {
+        surface_area += 0.5 * (side/2) * roof_side * Math.sin(45);
+    };
     result[type] = Math.round(surface_area);
 };
 
